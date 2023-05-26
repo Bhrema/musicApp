@@ -11,7 +11,17 @@ const mm = require('music-metadata');
             let {path} = files[i]
             mm.parseFile(path, {native: true}).then(metadata =>{
                 console.log(metadata.common.title, metadata.common.artist, metadata.format.duration);
+                let songRow = `
+                <tr>
+                    <td>${metadata.common.title}</td>
+                    <td>${metadata.common.artist}</td>
+                    <td>${metadata.format.duration}</td>
+                </tr>
+                `
+
+                $('#table-body').append(songRow)
             }
+
         )
         }
     }
