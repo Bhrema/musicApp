@@ -60,6 +60,25 @@ let timer = null
         playSong(currentIndex);
     }
 
+    function changeVolume(input){
+        audioPlayer.volume = input.value;
+    }
+
+    function clearPlaylist(){
+        clearInterval(timer);
+        $('#time-left').text('00:00');
+        $('#total-time').text('00:00');
+        $('#table-body').html('');
+        audioPlayer.pause();
+        audioPlayer.src= '';
+        currentIndex = 0;
+        playing = false;
+        $('h4').text('');
+        updatePlayButton();
+        timer = setInterval(updateTime, 1000);
+        songData = {path:[], title:[]};
+    }
+
     function updateTime(){
         $('#time-left').text(secondsToTime(audioPlayer.currentTime));
         $('#total-time').text(secondsToTime(audioPlayer.duration));
