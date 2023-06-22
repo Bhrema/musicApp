@@ -4,6 +4,7 @@ const mm = require('music-metadata');
 let songData = {path: [], title: []};
 let audioPlayer = $('audio').get(0);
 let playing = false;
+let currentIndex = 0;
     
     function chooseMusic(){
         $('input').click();
@@ -44,6 +45,18 @@ let playing = false;
         updatePlayButton();
     }
 
+    function playNext(){
+        currentIndex++
+        if(currentIndex>=songData.path.length)currentIndex=0
+        playSong(currentIndex);
+    }
+
+    function playPrevious(){
+        currentIndex--
+        if(currentIndex<0) lengthcurrentIndex = songData.path.length -1
+        playSong(currentIndex);
+    }
+
     function updatePlayButton(){
         let playIcon = $('#play-button span')
         if(playing){
@@ -57,6 +70,7 @@ let playing = false;
 
     function playSong(index){
         audioPlayer.src = songData.path[index];
+        currentIndex = index
         audioPlayer.load();
         audioPlayer.play();
         playing = true;
