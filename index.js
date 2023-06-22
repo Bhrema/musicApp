@@ -3,6 +3,7 @@ const mm = require('music-metadata');
 
 let songData = {path: [], title: []};
 let audioPlayer = $('audio').get(0);
+let playing = false;
     
     function chooseMusic(){
         $('input').click();
@@ -32,11 +33,38 @@ let audioPlayer = $('audio').get(0);
         }
     }
 
+    function play(){
+        if (playing){
+            audioPlayer.pause();
+            playing = false
+        }else{
+            audioPlayer.play();
+            playing = true
+        }
+        updatePlayButton();
+    }
+
+    function updatePlayButton(){
+        let playIcon = $('#play-button span')
+        if(playing){
+            playIcon.removeClass('icon-play')
+            playIcon.addClass('icon-pause')
+        }else{
+            playIcon.removeClass('icon-pause')
+            playIcon.addClass('icon-play')
+        }
+    }
+
     function playSong(index){
         audioPlayer.src = songData.path[index];
         audioPlayer.load();
         audioPlayer.play();
+        playing = true;
+        $('h4').text(songData.title[index])
+        updatePlayButton();
     }
+
+
 
     function secondsToTime(t){
         return padZero(parseInt((t/60) % 60)) + ":" + 
